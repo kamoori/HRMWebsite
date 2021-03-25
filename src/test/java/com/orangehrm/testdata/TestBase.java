@@ -1,5 +1,8 @@
 package com.orangehrm.testdata;
 
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
@@ -11,13 +14,14 @@ public class TestBase {
 
 	public WebDriver driver;
 	public UtilityMethods utility = new UtilityMethods();
-	public String browser=utility.getPropertyValue("Browser");
+	public String browser = utility.getPropertyValue("Browser");
+	public String url = utility.getPropertyValue("url");
 
 	public void launchBrowser(String browserName) {
 		String browserPath = "";
 		try {
-			if (browserName.equals("Chrome")) {
-				browserPath = System.getProperty("user.dir") + "//browserDriver//chromedriver.exe";
+			if (browserName.equals("chrome")) {
+				browserPath = System.getProperty("user.dir") + "//BrowserDrivers//chromedriver.exe";
 				System.setProperty("webdriver.chrome.driver", browserPath);
 				driver = new ChromeDriver();
 
@@ -38,6 +42,9 @@ public class TestBase {
 	@BeforeClass
 	public void setup() {
 		launchBrowser(browser);
+		driver.get(url);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
 
 	}
 

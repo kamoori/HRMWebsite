@@ -33,14 +33,44 @@ public class LoginPage extends WebActions {
 		return comments;
 
 	}
-	
-	public void enterUserName(String userName)
-	{
+
+	public void enterUserName(String userName) {
 		try {
 			wd.until(ExpectedConditions.visibilityOfElementLocated(userName_InputField));
-			
+			enterText(userName_InputField, userName);
+
 		} catch (Exception e) {
 		}
+	}
+
+	public void enterPassword(String password) {
+		try {
+			wd.until(ExpectedConditions.visibilityOfElementLocated(password_InputField));
+			enterText(password_InputField, password);
+
+		} catch (Exception e) {
+		}
+	}
+
+	public void clickOnLoginButton() {
+		try {
+			wd.until(ExpectedConditions.visibilityOfElementLocated(login_button));
+			clickOnButton(login_button);
+		} catch (Exception e) {
+		}
+
+	}
+
+	public HomePage doLogin(String uName, String password) {
+		try {
+			enterUserName(uName);
+			enterPassword(password);
+			clickOnLoginButton();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new HomePage(driver);
+
 	}
 
 }
